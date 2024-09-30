@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nutrition Summary</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Nutrition Summary</h1>
+    <p>Total Calories: {{ nutrition_summary['Total Calories'] }}</p>
+    <p>Average Calories per Meal: {{ nutrition_summary['Average Calories per Meal'] }}</p>
+    <a href="/">Back to Home</a>
+</body>
+</html>
