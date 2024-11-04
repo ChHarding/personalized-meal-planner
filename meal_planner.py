@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import logging
 
 EDAMAM_APP_ID = 'your_app_id'
 EDAMAM_APP_KEY = 'your_app_key'
@@ -16,6 +17,7 @@ def generate_meal_plan(dietary_preferences, health_goals):
     }
 
     try:
+        logging.info("Sending request to Edamam API")
         response = requests.get(EDAMAM_URL, params=params)
         response.raise_for_status()
         data = response.json()
@@ -31,7 +33,8 @@ def generate_meal_plan(dietary_preferences, health_goals):
         # Save meal plan to CSV file
         meal_plan_df = pd.DataFrame(meal_plan)
         meal_plan_df.to_csv('./data/meal_plan.csv', index=False)
-
+        
+        logging.info("Meal plan successfully generated and saved to CSV")
         return meal_plan_df
 
     except requests.exceptions.RequestException as e:
