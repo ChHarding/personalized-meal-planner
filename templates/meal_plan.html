@@ -2,20 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Plan</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Your Personalized Meal Plan</h1>
-    <ul>
-        {% for meal in meal_plan %}
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/nutrition_summary">Nutrition Summary</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Your Personalized Meal Plan</h1>
+        <ul>
+            {% for meal in meal_plan %}
             <li>
                 <strong>{{ meal.name }}</strong><br>
                 Calories: {{ meal.calories }}<br>
                 Ingredients: {{ meal.ingredients | join(', ') }}
             </li>
-        {% endfor %}
-    </ul>
-    <a href="/nutrition_summary">View Nutrition Summary</a>
+            {% endfor %}
+        </ul>
+        <a href="/nutrition_summary">View Nutrition Summary</a>
+    </div>
 </body>
 </html>
+

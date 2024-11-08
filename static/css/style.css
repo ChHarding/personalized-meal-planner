@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #f9f9f9;
     margin: 0;
     padding: 20px;
 }
@@ -9,9 +9,54 @@ h1 {
     color: #333;
 }
 
+nav {
+    background-color: #4CAF50;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #45a049;
+    border-radius: 3px;
+}
+
+nav ul li a:hover {
+    background-color: #3e8e41;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
 label {
     display: block;
     margin-top: 10px;
+}
+
+input {
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 20px;
 }
 
 button {
