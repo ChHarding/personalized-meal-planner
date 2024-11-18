@@ -34,5 +34,19 @@ def init_db():
         )
     ''')
 
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS nutrition_tracking (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        total_calories REAL,
+        avg_calories REAL,
+        protein REAL,
+        carbs REAL,
+        fats REAL,
+        FOREIGN KEY(user_id) REFERENCES users(id)
+    )
+''')
+
+
     conn.commit()
     conn.close()
