@@ -17,10 +17,17 @@ def generate_meal():
     health_goals = request.form.get('health_goals')
 
     meal_plan = generate_meal_plan(dietary_preferences, health_goals)
-    if meal_plan.empty:
-        return "Failed to generate a meal plan. Please try again."
+    
+    # Determine the success message based on the outcome
+    if not meal_plan.empty:
+        success_message = "Meal plan generated successfully!"
+    else:
+        success_message = "Failed to generate a meal plan. Please try again."
+
+    # Render the home page with the success message
+    return render_template('index.html', success_message=success_message)
    
-    return render_template('meal_plan.html', meal_plan=meal_plan.to_dict(orient='records'))
+
 
 @app.route('/nutrition_summary')
 def nutrition_summary():
@@ -40,8 +47,14 @@ app.secret_key = 'your_secret_key'
 # Route to initiate Fitbit authentication
 @app.route('/fitbit_auth')
 def fitbit_auth_route():
-    auth_url = fitbit_auth()
-    return redirect(auth_url)
+    try:
+        auth_url = fitbit_auth()
+        success_message = "Fitbit authentication initiated. Please complete the authorization process."
+    except Exception as e:
+        success_message = f"Failed to connect Fitbit: {str(e)}"
+    
+    return render_template('index.html', success_message=success_message)
+   
 
 # Callback route for Fitbit OAuth2
 @app.route('/callback')
@@ -60,4 +73,30 @@ def fitbit_data():
         data = fetch_fitbit_data(session['fitbit_token'])
         return render_template('fitbit_data.html', data=data)
     else:
-        return redirect(url_for('fitbit_auth_route'))
+        return redirect(url_for('fitbit_auth_route')) 
+    
+    @app.route('/dashboard')
+def dashboard():
+    # Fetch Fitbit data
+    fitbit_data = None
+    if 'fitbit_token' in session:
+        fitbit_data = fetch_fitbit_data(session['fitbit_token'])
+
+    # Fetch nutrition data from SQLite
+    conn = sqlite3.connect('meal_planner.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT total_calories, avg_calories, protein, carbs, fats FROM nutrition_tracking WHERE user_id = 1')  # Replace 1 with dynamic user ID
+    row = cursor.fetchone()
+    conn.close()
+
+    nutrition_data = None
+    if row:
+        nutrition_data = {
+            'total_calories': row[0],
+            'avg_calories': row[1],
+            'protein': row[2],
+            'carbs': row[3],
+            'fats': row[4],
+        }
+
+    return render_template('dashboard.html', fitbit_data=fitbit_data, nutrition_data=nutrition_data)

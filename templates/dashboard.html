@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a> |
+        <a href="/fitbit_auth">Connect Fitbit</a> |
+        <a href="/dashboard">Dashboard</a>
+    </nav>
+
+    <h1>Dashboard</h1>
+
+    <h2>Fitbit Activity Data</h2>
+    {% if fitbit_data %}
+        <p>Steps: {{ fitbit_data['summary']['steps'] }}</p>
+        <p>Calories Burned: {{ fitbit_data['summary']['caloriesOut'] }}</p>
+    {% else %}
+        <p>No Fitbit data available. Please connect your Fitbit account.</p>
+    {% endif %}
+
+    <h2>Nutrition Insights</h2>
+    {% if nutrition_data %}
+        <p>Total Calories: {{ nutrition_data['total_calories'] }}</p>
+        <p>Average Calories: {{ nutrition_data['avg_calories'] }}</p>
+        <p>Macros (Protein, Carbs, Fats):</p>
+        <ul>
+            <li>Protein: {{ nutrition_data['protein'] }} g</li>
+            <li>Carbs: {{ nutrition_data['carbs'] }} g</li>
+            <li>Fats: {{ nutrition_data['fats'] }} g</li>
+        </ul>
+    {% else %}
+        <p>No nutrition data available. Please generate a meal plan.</p>
+    {% endif %}
+</body>
+</html>
