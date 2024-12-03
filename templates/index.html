@@ -15,11 +15,18 @@
             <li><a href="/nutrition_summary">Nutrition Summary</a></li>
             <a href="/fitbit_auth">Connect Fitbit</a> |
         <a href="/fitbit_data">View Fitbit Data</a>
+        <a href="/dashboard">Dashboard</a>
         </ul>
     </nav>
 
     <div class="container">
         <h1>Personalized Meal Planner and Nutrition Tracker</h1>
+
+         <!-- Success Message Section -->
+    {% if success_message %}
+    <p style="color: green; font-weight: bold;">{{ success_message }}</p>
+{% endif %}
+
         <form action="/generate_meal_plan" method="post">
             <label for="dietary_preferences">Dietary Preferences:</label>
             <input type="text" id="dietary_preferences" name="dietary_preferences" required><br><br>

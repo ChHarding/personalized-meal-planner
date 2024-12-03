@@ -80,7 +80,11 @@ def dashboard():
     # Fetch Fitbit data
     fitbit_data = None
     if 'fitbit_token' in session:
-        fitbit_data = fetch_fitbit_data(session['fitbit_token'])
+        try:
+            fitbit_data = fetch_fitbit_data(session['fitbit_token'])
+        except Exception as e:
+            fitbit_data = {"error": f"Failed to fetch Fitbit data: {e}"}
+
 
     # Fetch nutrition data from SQLite
     conn = sqlite3.connect('meal_planner.db')

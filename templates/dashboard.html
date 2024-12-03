@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <nav>
@@ -13,6 +14,44 @@
     </nav>
 
     <h1>Dashboard</h1>
+
+    <h2>Nutrition Trends</h2>
+    <canvas id="nutritionChart"></canvas>
+
+    <h2>Fitbit Activity</h2>
+    <canvas id="fitbitChart"></canvas>
+
+    <script>
+        // Nutrition Chart
+        const nutritionCtx = document.getElementById('nutritionChart').getContext('2d');
+        const nutritionData = {
+            labels: ['Protein', 'Carbs', 'Fats'],
+            datasets: [{
+                label: 'Macronutrient Breakdown',
+                data: [{{ nutrition_data['protein'] }}, {{ nutrition_data['carbs'] }}, {{ nutrition_data['fats'] }}],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+            }]
+        };
+        new Chart(nutritionCtx, {
+            type: 'pie',
+            data: nutritionData,
+        });
+
+        // Fitbit Activity Chart
+        const fitbitCtx = document.getElementById('fitbitChart').getContext('2d');
+        const fitbitData = {
+            labels: ['Steps', 'Calories Burned'],
+            datasets: [{
+                label: 'Activity Metrics',
+                data: [{{ fitbit_data['summary']['steps'] }}, {{ fitbit_data['summary']['caloriesOut'] }}],
+                backgroundColor: ['#4BC0C0', '#FF6384'],
+            }]
+        };
+        new Chart(fitbitCtx, {
+            type: 'bar',
+            data: fitbitData,
+        });
+    </script>
 
     <h2>Fitbit Activity Data</h2>
     {% if fitbit_data %}
