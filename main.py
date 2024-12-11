@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, request, session, url_for
 from meal_planner import generate_meal_plan
 from nutrition_tracker import track_nutrition
-from fitness_tracker import fitbit_auth, fetch_fitbit_data
+from fitness_tracker_integration import fitbit_auth, fetch_fitbit_data
 from requests_oauthlib import OAuth2Session
 import sqlite3
 import pandas as pd
